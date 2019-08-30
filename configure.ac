@@ -49,6 +49,11 @@ PKG_CHECK_MODULES([THEORAENC], [theoraenc >= 1.1])
 PKG_CHECK_MODULES([FFTW], [fftw3])
 PKG_CHECK_MODULES([SNDFILE], [sndfile])
 
+if test x"$VERBOSE_TESTS" = x1 && which sed 2>&1 >/dev/null ; then
+    echo patching test-driver for verbose tests ...
+    sed -i 's/"$@" >$log_file 2>&1/"\$\@" 2>\&1 | tee $log_file/' test-driver
+fi
+
 AC_CONFIG_FILES([
 	Makefile
 	t/Makefile
